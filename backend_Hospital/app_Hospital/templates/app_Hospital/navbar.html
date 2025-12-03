@@ -1,0 +1,103 @@
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'inicio_Hospital' %}">
+            <i class="bi bi-hospital"></i> Sistema de Administración Hospital
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'inicio_Hospital' %}">
+                        <i class="bi bi-house-door"></i> Inicio
+                    </a>
+                </li>
+                
+                <!-- Paciente Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="pacienteDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person"></i> Paciente
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'agregar_Paciente' %}">Agregar Paciente</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_Paciente' %}">Ver Paciente</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Actualizar Paciente</a></li>
+                        <li><a class="dropdown-item" href="#">Borrar Paciente</a></li>
+                    </ul>
+                </li>
+
+                <!-- Doctor Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="doctorDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-badge"></i> Doctor
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'agregar_Doctor' %}">Agregar Doctor</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_Doctor' %}">Ver Doctor</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Actualizar Doctor</a></li>
+                        <li><a class="dropdown-item" href="#">Borrar Doctor</a></li>
+                    </ul>
+                </li>
+
+                <!-- Cita Medica Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="citaDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-calendar-check"></i> Cita Médica
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'agregar_Cita_Medica' %}">Agregar Cita Médica</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_Cita_Medica' %}">Ver Cita Médica</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Actualizar Cita Médica</a></li>
+                        <li><a class="dropdown-item" href="#">Borrar Cita Médica</a></li>
+                    </ul>
+                </li>
+
+                <!-- Diagnostico Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="diagnosticoDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-clipboard-pulse"></i> Diagnóstico
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'agregar_Diagnostico' %}">Agregar Diagnóstico</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_Diagnostico' %}">Ver Diagnóstico</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Actualizar Diagnóstico</a></li>
+                        <li><a class="dropdown-item" href="#">Borrar Diagnóstico</a></li>
+                    </ul>
+                </li>
+
+                <!-- Factura Hospital Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="facturaDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-receipt"></i> Factura Hospital
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'agregar_Factura_Hospital' %}">Agregar Factura Hospital</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_Factura_Hospital' %}">Ver Factura Hospital</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Actualizar Factura Hospital</a></li>
+                        <li><a class="dropdown-item" href="#">Borrar Factura Hospital</a></li>
+                    </ul>
+                </li>
+
+                <!-- Sala Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="salaDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-door-closed"></i> Sala
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'agregar_Sala' %}">Agregar Sala</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_Sala' %}">Ver Sala</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Actualizar Sala</a></li>
+                        <li><a class="dropdown-item" href="#">Borrar Sala</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

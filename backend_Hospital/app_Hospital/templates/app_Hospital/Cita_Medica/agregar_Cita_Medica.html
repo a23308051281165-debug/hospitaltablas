@@ -1,0 +1,77 @@
+{% extends 'app_Hospital/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0"><i class="bi bi-calendar-plus"></i> Agregar Nueva Cita Médica</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Paciente</label>
+                                <select class="form-control" name="id_paciente" required>
+                                    <option value="">Seleccionar Paciente</option>
+                                    {% for paciente in pacientes %}
+                                    <option value="{{ paciente.id_paciente }}">{{ paciente.nombre }} {{ paciente.apellido }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Doctor</label>
+                                <select class="form-control" name="id_doctor" required>
+                                    <option value="">Seleccionar Doctor</option>
+                                    {% for doctor in doctores %}
+                                    <option value="{{ doctor.id_doctor }}">Dr. {{ doctor.nombre }} {{ doctor.apellido }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Fecha de Cita</label>
+                                <input type="date" class="form-control" name="fecha_cita" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Hora de Cita</label>
+                                <input type="time" class="form-control" name="hora_cita" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Motivo</label>
+                            <textarea class="form-control" name="motivo" rows="3" required></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Estado</label>
+                                <select class="form-control" name="estado" required>
+                                    <option value="Programada">Programada</option>
+                                    <option value="Confirmada">Confirmada</option>
+                                    <option value="Completada">Completada</option>
+                                    <option value="Cancelada">Cancelada</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Observaciones</label>
+                            <textarea class="form-control" name="observaciones" rows="3"></textarea>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-info me-md-2">
+                                <i class="bi bi-save"></i> Guardar Cita
+                            </button>
+                            <a href="{% url 'ver_Cita_Medica' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

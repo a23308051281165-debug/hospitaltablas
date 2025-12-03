@@ -1,0 +1,73 @@
+{% extends 'app_Hospital/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #6f42c1;">
+                    <h4 class="mb-0"><i class="bi bi-clipboard-pulse"></i> Lista de Diagnósticos</h4>
+                    <a href="{% url 'agregar_Diagnostico' %}" class="btn btn-light btn-sm">
+                        <i class="bi bi-clipboard-plus"></i> Agregar Diagnóstico
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cita</th>
+                                    <th>Nivel Gravedad</th>
+                                    <th>Fecha Registro</th>
+                                    <th>Descripción</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for diagnostico in diagnosticos %}
+                                <tr>
+                                    <td>{{ diagnostico.id_diagnostico }}</td>
+                                    <td>Cita {{ diagnostico.id_cita.id_cita }}</td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if diagnostico.nivel_gravedad == 'Leve' %}bg-success
+                                            {% elif diagnostico.nivel_gravedad == 'Moderado' %}bg-warning
+                                            {% elif diagnostico.nivel_gravedad == 'Grave' %}bg-danger
+                                            {% else %}bg-dark{% endif %}">
+                                            {{ diagnostico.nivel_gravedad }}
+                                        </span>
+                                    </td>
+                                    <td>{{ diagnostico.fecha_registro }}</td>
+                                    <td>{{ diagnostico.descripcion|truncatewords:10 }}</td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <a href="#" class="btn btn-info" title="Ver">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <a href="{% url 'actualizar_Diagnostico' diagnostico.id_diagnostico %}" class="btn btn-warning" title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="{% url 'borrar_Diagnostico' diagnostico.id_diagnostico %}" class="btn btn-danger" title="Borrar">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted py-4">
+                                        <i class="bi bi-clipboard-pulse display-4 d-block mb-2"></i>
+                                        No hay diagnósticos registrados
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

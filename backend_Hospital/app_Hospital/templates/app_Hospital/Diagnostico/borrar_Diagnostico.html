@@ -1,0 +1,41 @@
+{% extends 'app_Hospital/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Confirmar Eliminación</h4>
+                </div>
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <i class="bi bi-clipboard-x" style="font-size: 4rem; color: #dc3545;"></i>
+                    </div>
+                    <h5>¿Está seguro que desea eliminar el diagnóstico?</h5>
+                    <p class="text-muted">
+                        <strong>ID: {{ diagnostico.id_diagnostico }}</strong><br>
+                        Cita: {{ diagnostico.id_cita.id_cita }}<br>
+                        Nivel de Gravedad: {{ diagnostico.nivel_gravedad }}<br>
+                        Fecha: {{ diagnostico.fecha_registro }}
+                    </p>
+                    <div class="alert alert-warning">
+                        <i class="bi bi-info-circle"></i> Esta acción no se puede deshacer.
+                    </div>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <button type="submit" class="btn btn-danger me-md-2">
+                                <i class="bi bi-trash"></i> Sí, Eliminar
+                            </button>
+                            <a href="{% url 'ver_Diagnostico' %}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

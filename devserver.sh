@@ -1,3 +1,3 @@
 #!/bin/sh
 source .venv/bin/activate
-python mysite/manage.py runserver $PORT
+python backend_Hospital/manage.py runserver $PORT

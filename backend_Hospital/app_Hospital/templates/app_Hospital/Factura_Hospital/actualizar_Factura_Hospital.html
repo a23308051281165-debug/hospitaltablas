@@ -1,0 +1,84 @@
+{% extends 'app_Hospital/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0"><i class="bi bi-pencil-square"></i> Actualizar Factura Hospital</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'realizar_actualizacion_Factura_Hospital' factura.id_factura %}">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Paciente</label>
+                                <select class="form-control" name="id_paciente" required>
+                                    {% for paciente in pacientes %}
+                                    <option value="{{ paciente.id_paciente }}" 
+                                        {% if paciente.id_paciente == factura.id_paciente.id_paciente %}selected{% endif %}>
+                                        {{ paciente.nombre }} {{ paciente.apellido }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Cita Médica</label>
+                                <select class="form-control" name="id_cita" required>
+                                    {% for cita in citas %}
+                                    <option value="{{ cita.id_cita }}"
+                                        {% if cita.id_cita == factura.id_cita.id_cita %}selected{% endif %}>
+                                        Cita {{ cita.id_cita }} - {{ cita.id_paciente.nombre }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Total</label>
+                                <input type="number" step="0.01" class="form-control" name="total" value="{{ factura.total }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Descuento</label>
+                                <input type="number" step="0.01" class="form-control" name="descuento" value="{{ factura.descuento }}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Estado de Pago</label>
+                                <select class="form-control" name="estado_pago" required>
+                                    <option value="Pendiente" {% if factura.estado_pago == 'Pendiente' %}selected{% endif %}>Pendiente</option>
+                                    <option value="Pagado" {% if factura.estado_pago == 'Pagado' %}selected{% endif %}>Pagado</option>
+                                    <option value="Cancelado" {% if factura.estado_pago == 'Cancelado' %}selected{% endif %}>Cancelado</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Método de Pago</label>
+                                <select class="form-control" name="metodo_pago" required>
+                                    <option value="Efectivo" {% if factura.metodo_pago == 'Efectivo' %}selected{% endif %}>Efectivo</option>
+                                    <option value="Tarjeta" {% if factura.metodo_pago == 'Tarjeta' %}selected{% endif %}>Tarjeta</option>
+                                    <option value="Transferencia" {% if factura.metodo_pago == 'Transferencia' %}selected{% endif %}>Transferencia</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fecha de Emisión</label>
+                            <input type="date" class="form-control" name="fecha_emision" value="{{ factura.fecha_emision|date:'Y-m-d' }}" required>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-warning me-md-2">
+                                <i class="bi bi-check-circle"></i> Actualizar Factura
+                            </button>
+                            <a href="{% url 'ver_Factura_Hospital' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

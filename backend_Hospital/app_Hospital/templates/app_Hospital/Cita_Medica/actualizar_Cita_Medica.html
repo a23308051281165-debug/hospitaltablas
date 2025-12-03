@@ -1,0 +1,81 @@
+{% extends 'app_Hospital/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0"><i class="bi bi-pencil-square"></i> Actualizar Cita Médica</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'realizar_actualizacion_Cita_Medica' cita.id_cita %}">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Paciente</label>
+                                <select class="form-control" name="id_paciente" required>
+                                    {% for paciente in pacientes %}
+                                    <option value="{{ paciente.id_paciente }}" 
+                                        {% if paciente.id_paciente == cita.id_paciente.id_paciente %}selected{% endif %}>
+                                        {{ paciente.nombre }} {{ paciente.apellido }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Doctor</label>
+                                <select class="form-control" name="id_doctor" required>
+                                    {% for doctor in doctores %}
+                                    <option value="{{ doctor.id_doctor }}"
+                                        {% if doctor.id_doctor == cita.id_doctor.id_doctor %}selected{% endif %}>
+                                        Dr. {{ doctor.nombre }} {{ doctor.apellido }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Fecha de Cita</label>
+                                <input type="date" class="form-control" name="fecha_cita" value="{{ cita.fecha_cita|date:'Y-m-d' }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Hora de Cita</label>
+                                <input type="time" class="form-control" name="hora_cita" value="{{ cita.hora_cita|time:'H:i' }}" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Motivo</label>
+                            <textarea class="form-control" name="motivo" rows="3" required>{{ cita.motivo }}</textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Estado</label>
+                                <select class="form-control" name="estado" required>
+                                    <option value="Programada" {% if cita.estado == 'Programada' %}selected{% endif %}>Programada</option>
+                                    <option value="Confirmada" {% if cita.estado == 'Confirmada' %}selected{% endif %}>Confirmada</option>
+                                    <option value="Completada" {% if cita.estado == 'Completada' %}selected{% endif %}>Completada</option>
+                                    <option value="Cancelada" {% if cita.estado == 'Cancelada' %}selected{% endif %}>Cancelada</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Observaciones</label>
+                            <textarea class="form-control" name="observaciones" rows="3">{{ cita.observaciones }}</textarea>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-warning me-md-2">
+                                <i class="bi bi-check-circle"></i> Actualizar Cita
+                            </button>
+                            <a href="{% url 'ver_Cita_Medica' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'app_Hospital/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-orange text-white" style="background-color: #fd7e14;">
+                    <h4 class="mb-0"><i class="bi bi-receipt"></i> Agregar Nueva Factura Hospital</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Paciente</label>
+                                <select class="form-control" name="id_paciente" required>
+                                    <option value="">Seleccionar Paciente</option>
+                                    {% for paciente in pacientes %}
+                                    <option value="{{ paciente.id_paciente }}">{{ paciente.nombre }} {{ paciente.apellido }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Cita Médica</label>
+                                <select class="form-control" name="id_cita" required>
+                                    <option value="">Seleccionar Cita</option>
+                                    {% for cita in citas %}
+                                    <option value="{{ cita.id_cita }}">Cita {{ cita.id_cita }} - {{ cita.id_paciente.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Total</label>
+                                <input type="number" step="0.01" class="form-control" name="total" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Descuento</label>
+                                <input type="number" step="0.01" class="form-control" name="descuento" value="0.00">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Estado de Pago</label>
+                                <select class="form-control" name="estado_pago" required>
+                                    <option value="Pendiente">Pendiente</option>
+                                    <option value="Pagado">Pagado</option>
+                                    <option value="Cancelado">Cancelado</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Método de Pago</label>
+                                <select class="form-control" name="metodo_pago" required>
+                                    <option value="Efectivo">Efectivo</option>
+                                    <option value="Tarjeta">Tarjeta</option>
+                                    <option value="Transferencia">Transferencia</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fecha de Emisión</label>
+                            <input type="date" class="form-control" name="fecha_emision" required>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn text-white me-md-2" style="background-color: #fd7e14;">
+                                <i class="bi bi-save"></i> Guardar Factura
+                            </button>
+                            <a href="{% url 'ver_Factura_Hospital' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

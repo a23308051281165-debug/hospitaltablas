@@ -1,0 +1,75 @@
+{% extends 'app_Hospital/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0"><i class="bi bi-calendar-check"></i> Lista de Citas Médicas</h4>
+                    <a href="{% url 'agregar_Cita_Medica' %}" class="btn btn-light btn-sm">
+                        <i class="bi bi-calendar-plus"></i> Agregar Cita
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Paciente</th>
+                                    <th>Doctor</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cita in citas %}
+                                <tr>
+                                    <td>{{ cita.id_cita }}</td>
+                                    <td>{{ cita.id_paciente.nombre }} {{ cita.id_paciente.apellido }}</td>
+                                    <td>Dr. {{ cita.id_doctor.nombre }} {{ cita.id_doctor.apellido }}</td>
+                                    <td>{{ cita.fecha_cita }}</td>
+                                    <td>{{ cita.hora_cita }}</td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if cita.estado == 'Programada' %}bg-warning
+                                            {% elif cita.estado == 'Confirmada' %}bg-primary
+                                            {% elif cita.estado == 'Completada' %}bg-success
+                                            {% else %}bg-danger{% endif %}">
+                                            {{ cita.estado }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <a href="#" class="btn btn-info" title="Ver">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <a href="{% url 'actualizar_Cita_Medica' cita.id_cita %}" class="btn btn-warning" title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="{% url 'borrar_Cita_Medica' cita.id_cita %}" class="btn btn-danger" title="Borrar">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted py-4">
+                                        <i class="bi bi-calendar-check display-4 d-block mb-2"></i>
+                                        No hay citas médicas registradas
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

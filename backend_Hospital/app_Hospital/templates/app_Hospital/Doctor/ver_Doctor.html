@@ -1,0 +1,67 @@
+{% extends 'app_Hospital/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0"><i class="bi bi-person-badge"></i> Lista de Doctores</h4>
+                    <a href="{% url 'agregar_Doctor' %}" class="btn btn-light btn-sm">
+                        <i class="bi bi-person-plus"></i> Agregar Doctor
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Especialidad</th>
+                                    <th>Teléfono</th>
+                                    <th>Email</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for doctor in doctores %}
+                                <tr>
+                                    <td>{{ doctor.id_doctor }}</td>
+                                    <td>{{ doctor.nombre }}</td>
+                                    <td>{{ doctor.apellido }}</td>
+                                    <td>{{ doctor.especialidad }}</td>
+                                    <td>{{ doctor.telefono }}</td>
+                                    <td>{{ doctor.email }}</td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <a href="#" class="btn btn-info" title="Ver">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <a href="{% url 'actualizar_Doctor' doctor.id_doctor %}" class="btn btn-warning" title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="{% url 'borrar_Doctor' doctor.id_doctor %}" class="btn btn-danger" title="Borrar">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted py-4">
+                                        <i class="bi bi-person-badge display-4 d-block mb-2"></i>
+                                        No hay doctores registrados
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

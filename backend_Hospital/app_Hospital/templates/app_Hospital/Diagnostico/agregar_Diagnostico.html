@@ -1,0 +1,62 @@
+{% extends 'app_Hospital/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-purple text-white" style="background-color: #6f42c1;">
+                    <h4 class="mb-0"><i class="bi bi-clipboard-plus"></i> Agregar Nuevo Diagnóstico</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Cita Médica</label>
+                            <select class="form-control" name="id_cita" required>
+                                <option value="">Seleccionar Cita</option>
+                                {% for cita in citas %}
+                                <option value="{{ cita.id_cita }}">
+                                    Cita {{ cita.id_cita }} - {{ cita.id_paciente.nombre }} {{ cita.id_paciente.apellido }} - {{ cita.fecha_cita }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descripción</label>
+                            <textarea class="form-control" name="descripcion" rows="4" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tratamiento Recomendado</label>
+                            <textarea class="form-control" name="tratamiento_recomendado" rows="3" required></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nivel de Gravedad</label>
+                                <select class="form-control" name="nivel_gravedad" required>
+                                    <option value="Leve">Leve</option>
+                                    <option value="Moderado">Moderado</option>
+                                    <option value="Grave">Grave</option>
+                                    <option value="Crítico">Crítico</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Fecha de Registro</label>
+                                <input type="date" class="form-control" name="fecha_registro" required>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn text-white me-md-2" style="background-color: #6f42c1;">
+                                <i class="bi bi-save"></i> Guardar Diagnóstico
+                            </button>
+                            <a href="{% url 'ver_Diagnostico' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
