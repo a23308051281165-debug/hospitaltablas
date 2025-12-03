@@ -11,7 +11,7 @@ SECRET_KEY = 'django-insecure-your-secret-key-here'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['9000-firebase-hospitaltablas-1764612037379.cluster-zhw3w37rxzgkutusbbhib6qhra.cloudworkstations.dev', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -82,3 +82,5 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = ['https://9000-firebase-hospitaltablas-1764612037379.cluster-zhw3w37rxzgkutusbbhib6qhra.cloudworkstations.dev']
