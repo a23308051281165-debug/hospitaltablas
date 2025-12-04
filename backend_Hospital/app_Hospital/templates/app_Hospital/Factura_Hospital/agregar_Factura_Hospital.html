@@ -3,73 +3,134 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-10 mx-auto">
             <div class="card">
-                <div class="card-header bg-orange text-white" style="background-color: #fd7e14;">
-                    <h4 class="mb-0"><i class="bi bi-receipt"></i> Agregar Nueva Factura Hospital</h4>
+                <div class="card-header" style="background: linear-gradient(135deg, #fd7e14 0%, #e44d26 100%); color: white;">
+                    <h4 class="mb-0"><i class="bi bi-receipt me-2"></i>Agregar Nueva Factura Hospital</h4>
                 </div>
                 <div class="card-body">
-                    <form method="POST">
+                    <form method="POST" action="{% url 'agregar_Factura_Hospital' %}">
                         {% csrf_token %}
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Paciente</label>
-                                <select class="form-control" name="id_paciente" required>
-                                    <option value="">Seleccionar Paciente</option>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Paciente *</label>
+                                <select class="form-select" name="id_paciente" required>
+                                    <option value="">Seleccionar paciente...</option>
                                     {% for paciente in pacientes %}
-                                    <option value="{{ paciente.id_paciente }}">{{ paciente.nombre }} {{ paciente.apellido }}</option>
+                                    <option value="{{ paciente.id_paciente }}">
+                                        {{ paciente.nombre }} {{ paciente.apellido }} - {{ paciente.numero_identificacion }}
+                                    </option>
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Cita Médica</label>
-                                <select class="form-control" name="id_cita" required>
-                                    <option value="">Seleccionar Cita</option>
+                            <div class="col-md-6">
+                                <label class="form-label">Cita Médica (Opcional)</label>
+                                <select class="form-select" name="id_cita">
+                                    <option value="">Seleccionar cita...</option>
                                     {% for cita in citas %}
-                                    <option value="{{ cita.id_cita }}">Cita {{ cita.id_cita }} - {{ cita.id_paciente.nombre }}</option>
+                                    <option value="{{ cita.id_cita }}">
+                                        Cita {{ cita.id_cita }} - {{ cita.fecha_cita|date:"d/m/Y" }}
+                                    </option>
                                     {% endfor %}
                                 </select>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Total</label>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Número de Factura *</label>
+                                <input type="text" class="form-control" name="numero_factura" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Número de Orden</label>
+                                <input type="text" class="form-control" name="numero_orden">
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Total *</label>
                                 <input type="number" step="0.01" class="form-control" name="total" required>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Descuento</label>
-                                <input type="number" step="0.01" class="form-control" name="descuento" value="0.00">
+                            <div class="col-md-6">
+                                <label class="form-label">Tipo de Servicio</label>
+                                <select class="form-select" name="tipo_servicio">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="CONS">Consulta</option>
+                                    <option value="LAB">Laboratorio</option>
+                                    <option value="IMG">Imágenes</option>
+                                    <option value="HOS">Hospitalización</option>
+                                    <option value="FARM">Farmacia</option>
+                                    <option value="TER">Terapia</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Descuento (%)</label>
+                                <input type="number" step="0.01" class="form-control" name="descuento" value="0">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Impuestos (%)</label>
+                                <input type="number" step="0.01" class="form-control" name="impuestos" value="0">
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
                                 <label class="form-label">Estado de Pago</label>
-                                <select class="form-control" name="estado_pago" required>
-                                    <option value="Pendiente">Pendiente</option>
-                                    <option value="Pagado">Pagado</option>
-                                    <option value="Cancelado">Cancelado</option>
+                                <select class="form-select" name="estado_pago">
+                                    <option value="PEND">Pendiente</option>
+                                    <option value="PAG">Pagado</option>
+                                    <option value="PAR">Parcial</option>
+                                    <option value="CANC">Cancelado</option>
+                                    <option value="ANU">Anulado</option>
                                 </select>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6">
                                 <label class="form-label">Método de Pago</label>
-                                <select class="form-control" name="metodo_pago" required>
-                                    <option value="Efectivo">Efectivo</option>
-                                    <option value="Tarjeta">Tarjeta</option>
-                                    <option value="Transferencia">Transferencia</option>
+                                <select class="form-select" name="metodo_pago">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="EFE">Efectivo</option>
+                                    <option value="TAR">Tarjeta</option>
+                                    <option value="CHE">Cheque</option>
+                                    <option value="TRA">Transferencia</option>
+                                    <option value="SEG">Seguro</option>
+                                    <option value="OTRO">Otro</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Fecha de Emisión</label>
-                            <input type="date" class="form-control" name="fecha_emision" required>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Código de Autorización</label>
+                                <input type="text" class="form-control" name="codigo_autorizacion">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Referencia de Pago</label>
+                                <input type="text" class="form-control" name="referencia_pago">
+                            </div>
                         </div>
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn text-white me-md-2" style="background-color: #fd7e14;">
-                                <i class="bi bi-save"></i> Guardar Factura
-                            </button>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Descripción de Servicios</label>
+                            <textarea class="form-control" name="descripcion_servicios" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Comentarios Adicionales</label>
+                            <textarea class="form-control" name="comentarios_adicionales" rows="2"></textarea>
+                        </div>
+                        
+                        <div class="text-end">
                             <a href="{% url 'ver_Factura_Hospital' %}" class="btn btn-secondary">
                                 <i class="bi bi-arrow-left"></i> Cancelar
                             </a>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="bi bi-save"></i> Guardar Factura
+                            </button>
                         </div>
                     </form>
                 </div>

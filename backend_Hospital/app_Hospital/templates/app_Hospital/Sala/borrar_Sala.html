@@ -5,32 +5,52 @@
     <div class="row">
         <div class="col-md-6 mx-auto">
             <div class="card">
-                <div class="card-header bg-danger text-white">
-                    <h4 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Confirmar Eliminación</h4>
+                <div class="card-header" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); color: white;">
+                    <h4 class="mb-0"><i class="bi bi-exclamation-triangle me-2"></i>Confirmar Eliminación</h4>
                 </div>
                 <div class="card-body text-center">
-                    <div class="mb-4">
-                        <i class="bi bi-door-closed" style="font-size: 4rem; color: #dc3545;"></i>
-                    </div>
-                    <h5>¿Está seguro que desea eliminar la sala?</h5>
-                    <p class="text-muted">
-                        <strong>{{ sala.nombre }}</strong><br>
-                        Tipo: {{ sala.tipo }}<br>
-                        Capacidad: {{ sala.capacidad }} personas<br>
-                        ID: {{ sala.id_sala }}
-                    </p>
                     <div class="alert alert-warning">
-                        <i class="bi bi-info-circle"></i> Esta acción no se puede deshacer.
+                        <i class="bi bi-exclamation-circle display-4"></i>
+                        <h4 class="mt-3">¿Está seguro de eliminar?</h4>
+                        <p class="mb-0">Esta acción no se puede deshacer</p>
                     </div>
-                    <form method="POST">
+                    
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5>Sala a eliminar:</h5>
+                            <p class="mb-1"><strong>Código:</strong> {{ sala.codigo_sala|default:sala.id_sala }}</p>
+                            <p class="mb-1"><strong>Nombre:</strong> {{ sala.nombre }}</p>
+                            <p class="mb-1"><strong>Tipo:</strong> 
+                                {% if sala.tipo == 'CONS' %}
+                                    Consulta
+                                {% elif sala.tipo == 'QUIR' %}
+                                    Quirófano
+                                {% elif sala.tipo == 'URG' %}
+                                    Urgencias
+                                {% elif sala.tipo == 'HOS' %}
+                                    Hospitalización
+                                {% elif sala.tipo == 'LAB' %}
+                                    Laboratorio
+                                {% elif sala.tipo == 'ADM' %}
+                                    Administrativa
+                                {% else %}
+                                    Otro
+                                {% endif %}
+                            </p>
+                            <p class="mb-1"><strong>Capacidad:</strong> {{ sala.capacidad }}</p>
+                            <p class="mb-0"><strong>Ubicación:</strong> {{ sala.ubicacion|default:"-" }}</p>
+                        </div>
+                    </div>
+                    
+                    <form method="POST" action="">
                         {% csrf_token %}
                         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                            <button type="submit" class="btn btn-danger me-md-2">
-                                <i class="bi bi-trash"></i> Sí, Eliminar
-                            </button>
-                            <a href="{% url 'ver_Sala' %}" class="btn btn-secondary">
+                            <a href="{% url 'ver_Sala' %}" class="btn btn-secondary me-md-2">
                                 <i class="bi bi-x-circle"></i> Cancelar
                             </a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Confirmar Eliminación
+                            </button>
                         </div>
                     </form>
                 </div>

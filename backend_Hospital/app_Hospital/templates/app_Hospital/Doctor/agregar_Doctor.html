@@ -1,62 +1,100 @@
-
 {% extends 'app_Hospital/base.html' %}
 
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-10 mx-auto">
             <div class="card">
-                <div class="card-header bg-success text-white">
-                    <h4 class="mb-0"><i class="bi bi-person-plus"></i> Agregar Nuevo Doctor</h4>
+                <div class="card-header" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%); color: white;">
+                    <h4 class="mb-0"><i class="bi bi-person-badge me-2"></i>Agregar Nuevo Doctor</h4>
                 </div>
                 <div class="card-body">
-                    <form method="POST">
+                    <form method="POST" action="{% url 'agregar_Doctor' %}">
                         {% csrf_token %}
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Nombre</label>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre *</label>
                                 <input type="text" class="form-control" name="nombre" required>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Apellido</label>
+                            <div class="col-md-6">
+                                <label class="form-label">Apellido *</label>
                                 <input type="text" class="form-control" name="apellido" required>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Especialidad</label>
-                            <input type="text" class="form-control" name="especialidad" required>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Teléfono</label>
-                                <input type="tel" class="form-control" name="telefono" required>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Especialidad *</label>
+                                <input type="text" class="form-control" name="especialidad" required>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Número de Licencia</label>
+                            <div class="col-md-6">
+                                <label class="form-label">Número de Licencia *</label>
                                 <input type="text" class="form-control" name="num_licencia" required>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Fecha de Contratación</label>
-                                <input type="date" class="form-control" name="fecha_contratacion" required>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" name="telefono">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email">
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Salario</label>
-                            <input type="number" step="0.01" class="form-control" name="salario" required>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha de Contratación</label>
+                                <input type="date" class="form-control" name="fecha_contratacion">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Salario</label>
+                                <input type="number" step="0.01" class="form-control" name="salario">
+                            </div>
                         </div>
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn btn-success me-md-2">
-                                <i class="bi bi-save"></i> Guardar Doctor
-                            </button>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Horario de Trabajo</label>
+                                <input type="text" class="form-control" name="horario_trabajo" placeholder="Ej: 8:00 AM - 4:00 PM">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Dirección de la Clínica</label>
+                                <input type="text" class="form-control" name="direccion_clinica">
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Años de Experiencia</label>
+                                <input type="number" class="form-control" name="experiencia_anios">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Idiomas</label>
+                                <input type="text" class="form-control" name="idiomas" placeholder="Ej: Español, Inglés">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Certificaciones</label>
+                            <textarea class="form-control" name="certificaciones" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" name="estado_activo" id="estado_activo" checked>
+                            <label class="form-check-label" for="estado_activo">Doctor Activo</label>
+                        </div>
+                        
+                        <div class="text-end">
                             <a href="{% url 'ver_Doctor' %}" class="btn btn-secondary">
                                 <i class="bi bi-arrow-left"></i> Cancelar
                             </a>
+                            <button type="submit" class="btn btn-info">
+                                <i class="bi bi-save"></i> Guardar Doctor
+                            </button>
                         </div>
                     </form>
                 </div>

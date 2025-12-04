@@ -3,78 +3,120 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-10 mx-auto">
             <div class="card">
-                <div class="card-header bg-warning text-dark">
-                    <h4 class="mb-0"><i class="bi bi-pencil-square"></i> Actualizar Paciente</h4>
+                <div class="card-header" style="background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%); color: white;">
+                    <h4 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Actualizar Paciente: {{ paciente.nombre }} {{ paciente.apellido }}</h4>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{% url 'realizar_actualizacion_Paciente' paciente.id_paciente %}">
                         {% csrf_token %}
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Nombre</label>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre *</label>
                                 <input type="text" class="form-control" name="nombre" value="{{ paciente.nombre }}" required>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Apellido</label>
+                            <div class="col-md-6">
+                                <label class="form-label">Apellido *</label>
                                 <input type="text" class="form-control" name="apellido" value="{{ paciente.apellido }}" required>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
                                 <label class="form-label">Fecha de Nacimiento</label>
-                                <input type="date" class="form-control" name="fecha_nacimiento" value="{{ paciente.fecha_nacimiento|date:'Y-m-d' }}" required>
+                                <input type="date" class="form-control" name="fecha_nacimiento" 
+                                       value="{{ paciente.fecha_nacimiento|date:'Y-m-d' }}">
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6">
                                 <label class="form-label">Género</label>
-                                <select class="form-control" name="genero" required>
+                                <select class="form-select" name="genero">
+                                    <option value="">Seleccionar...</option>
                                     <option value="M" {% if paciente.genero == 'M' %}selected{% endif %}>Masculino</option>
                                     <option value="F" {% if paciente.genero == 'F' %}selected{% endif %}>Femenino</option>
                                     <option value="O" {% if paciente.genero == 'O' %}selected{% endif %}>Otro</option>
                                 </select>
                             </div>
                         </div>
+                        
                         <div class="mb-3">
                             <label class="form-label">Dirección</label>
-                            <input type="text" class="form-control" name="direccion" value="{{ paciente.direccion }}" required>
+                            <input type="text" class="form-control" name="direccion" value="{{ paciente.direccion|default:'' }}">
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
                                 <label class="form-label">Teléfono</label>
-                                <input type="tel" class="form-control" name="telefono" value="{{ paciente.telefono }}" required>
+                                <input type="text" class="form-control" name="telefono" value="{{ paciente.telefono|default:'' }}">
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6">
                                 <label class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email" value="{{ paciente.email }}" required>
+                                <input type="email" class="form-control" name="email" value="{{ paciente.email|default:'' }}">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
                                 <label class="form-label">Tipo de Sangre</label>
-                                <select class="form-control" name="tipo_sangre" required>
-                                    <option value="A+" {% if paciente.tipo_sangre == 'A+' %}selected{% endif %}>A+</option>
-                                    <option value="A-" {% if paciente.tipo_sangre == 'A-' %}selected{% endif %}>A-</option>
-                                    <option value="B+" {% if paciente.tipo_sangre == 'B+' %}selected{% endif %}>B+</option>
-                                    <option value="B-" {% if paciente.tipo_sangre == 'B-' %}selected{% endif %}>B-</option>
-                                    <option value="AB+" {% if paciente.tipo_sangre == 'AB+' %}selected{% endif %}>AB+</option>
-                                    <option value="AB-" {% if paciente.tipo_sangre == 'AB-' %}selected{% endif %}>AB-</option>
-                                    <option value="O+" {% if paciente.tipo_sangre == 'O+' %}selected{% endif %}>O+</option>
-                                    <option value="O-" {% if paciente.tipo_sangre == 'O-' %}selected{% endif %}>O-</option>
+                                <input type="text" class="form-control" name="tipo_sangre" value="{{ paciente.tipo_sangre|default:'' }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Estado Civil</label>
+                                <select class="form-select" name="estado_civil">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="S" {% if paciente.estado_civil == 'S' %}selected{% endif %}>Soltero/a</option>
+                                    <option value="C" {% if paciente.estado_civil == 'C' %}selected{% endif %}>Casado/a</option>
+                                    <option value="D" {% if paciente.estado_civil == 'D' %}selected{% endif %}>Divorciado/a</option>
+                                    <option value="V" {% if paciente.estado_civil == 'V' %}selected{% endif %}>Viudo/a</option>
+                                    <option value="U" {% if paciente.estado_civil == 'U' %}selected{% endif %}>Unión libre</option>
                                 </select>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Fecha de Registro</label>
-                                <input type="date" class="form-control" name="fecha_registro" value="{{ paciente.fecha_registro|date:'Y-m-d' }}" required>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Ocupación</label>
+                                <input type="text" class="form-control" name="ocupacion" value="{{ paciente.ocupacion|default:'' }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Nacionalidad</label>
+                                <input type="text" class="form-control" name="nacionalidad" value="{{ paciente.nacionalidad|default:'Mexicana' }}">
                             </div>
                         </div>
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn btn-warning me-md-2">
-                                <i class="bi bi-check-circle"></i> Actualizar Paciente
-                            </button>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Número Seguro Social</label>
+                                <input type="text" class="form-control" name="numero_seguro_social" 
+                                       value="{{ paciente.numero_seguro_social|default:'' }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Tipo de Identificación</label>
+                                <select class="form-select" name="tipo_identificacion">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="DNI" {% if paciente.tipo_identificacion == 'DNI' %}selected{% endif %}>Documento Nacional de Identidad</option>
+                                    <option value="PAS" {% if paciente.tipo_identificacion == 'PAS' %}selected{% endif %}>Pasaporte</option>
+                                    <option value="CE" {% if paciente.tipo_identificacion == 'CE' %}selected{% endif %}>Carnet de Extranjería</option>
+                                    <option value="LIC" {% if paciente.tipo_identificacion == 'LIC' %}selected{% endif %}>Licencia de Conducir</option>
+                                    <option value="OTRO" {% if paciente.tipo_identificacion == 'OTRO' %}selected{% endif %}>Otro</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Número de Identificación *</label>
+                            <input type="text" class="form-control" name="numero_identificacion" 
+                                   value="{{ paciente.numero_identificacion }}" required>
+                        </div>
+                        
+                        <div class="text-end">
                             <a href="{% url 'ver_Paciente' %}" class="btn btn-secondary">
                                 <i class="bi bi-arrow-left"></i> Cancelar
                             </a>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="bi bi-check-circle"></i> Actualizar
+                            </button>
                         </div>
                     </form>
                 </div>

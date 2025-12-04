@@ -3,55 +3,116 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-10 mx-auto">
             <div class="card">
-                <div class="card-header bg-purple text-white" style="background-color: #6f42c1;">
-                    <h4 class="mb-0"><i class="bi bi-clipboard-plus"></i> Agregar Nuevo Diagnóstico</h4>
+                <div class="card-header" style="background: linear-gradient(135deg, #20c997 0%, #198754 100%); color: white;">
+                    <h4 class="mb-0"><i class="bi bi-clipboard-plus me-2"></i>Agregar Nuevo Diagnóstico</h4>
                 </div>
                 <div class="card-body">
-                    <form method="POST">
+                    <form method="POST" action="{% url 'agregar_Diagnostico' %}">
                         {% csrf_token %}
-                        <div class="mb-3">
-                            <label class="form-label">Cita Médica</label>
-                            <select class="form-control" name="id_cita" required>
-                                <option value="">Seleccionar Cita</option>
-                                {% for cita in citas %}
-                                <option value="{{ cita.id_cita }}">
-                                    Cita {{ cita.id_cita }} - {{ cita.id_paciente.nombre }} {{ cita.id_paciente.apellido }} - {{ cita.fecha_cita }}
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Descripción</label>
-                            <textarea class="form-control" name="descripcion" rows="4" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Tratamiento Recomendado</label>
-                            <textarea class="form-control" name="tratamiento_recomendado" rows="3" required></textarea>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Nivel de Gravedad</label>
-                                <select class="form-control" name="nivel_gravedad" required>
-                                    <option value="Leve">Leve</option>
-                                    <option value="Moderado">Moderado</option>
-                                    <option value="Grave">Grave</option>
-                                    <option value="Crítico">Crítico</option>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Cita Médica *</label>
+                                <select class="form-select" name="id_cita" required>
+                                    <option value="">Seleccionar cita...</option>
+                                    {% for cita in citas %}
+                                    <option value="{{ cita.id_cita }}">
+                                        Cita {{ cita.id_cita }} - {{ cita.id_paciente.nombre }} {{ cita.id_paciente.apellido }} - {{ cita.fecha_cita|date:"d/m/Y" }}
+                                    </option>
+                                    {% endfor %}
                                 </select>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Fecha de Registro</label>
-                                <input type="date" class="form-control" name="fecha_registro" required>
+                            <div class="col-md-6">
+                                <label class="form-label">Código CIE-10</label>
+                                <input type="text" class="form-control" name="codigo_cie10" placeholder="Ej: J00">
                             </div>
                         </div>
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn text-white me-md-2" style="background-color: #6f42c1;">
-                                <i class="bi bi-save"></i> Guardar Diagnóstico
-                            </button>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Código de Diagnóstico</label>
+                                <input type="text" class="form-control" name="codigo_diagnostico">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Especialista Encargado</label>
+                                <input type="text" class="form-control" name="especialista_encargado">
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Nivel de Gravedad</label>
+                                <select class="form-select" name="nivel_gravedad">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="LEV">Leve</option>
+                                    <option value="MOD">Moderado</option>
+                                    <option value="GRA">Grave</option>
+                                    <option value="CRI">Crítico</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Estado del Diagnóstico</label>
+                                <select class="form-select" name="estado_diagnostico">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="PREL">Preliminar</option>
+                                    <option value="CONF">Confirmado</option>
+                                    <option value="DESC">Descartado</option>
+                                    <option value="REVI">En Revisión</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Tipo de Diagnóstico</label>
+                            <select class="form-select" name="tipo_diagnostico">
+                                <option value="">Seleccionar...</option>
+                                <option value="CLIN">Clínico</option>
+                                <option value="LAB">Laboratorio</option>
+                                <option value="IMG">Imagenología</option>
+                                <option value="PAT">Patológico</option>
+                                <option value="COM">Combinado</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Descripción del Diagnóstico *</label>
+                            <textarea class="form-control" name="descripcion" rows="4" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Resultado de Exámenes</label>
+                            <textarea class="form-control" name="resultado_examen" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Tratamiento Recomendado</label>
+                            <textarea class="form-control" name="tratamiento_recomendado" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Seguimiento</label>
+                            <textarea class="form-control" name="seguimiento" rows="2"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Recomendaciones</label>
+                            <textarea class="form-control" name="recomendaciones" rows="2"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Comentarios</label>
+                            <textarea class="form-control" name="comentarios" rows="2"></textarea>
+                        </div>
+                        
+                        <div class="text-end">
                             <a href="{% url 'ver_Diagnostico' %}" class="btn btn-secondary">
                                 <i class="bi bi-arrow-left"></i> Cancelar
                             </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-save"></i> Guardar Diagnóstico
+                            </button>
                         </div>
                     </form>
                 </div>

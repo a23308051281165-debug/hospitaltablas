@@ -3,70 +3,137 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-10 mx-auto">
             <div class="card">
-                <div class="card-header bg-info text-white">
-                    <h4 class="mb-0"><i class="bi bi-calendar-plus"></i> Agregar Nueva Cita Médica</h4>
+                <div class="card-header" style="background: linear-gradient(135deg, #6f42c1 0%, #6610f2 100%); color: white;">
+                    <h4 class="mb-0"><i class="bi bi-calendar-plus me-2"></i>Agregar Nueva Cita Médica</h4>
                 </div>
                 <div class="card-body">
-                    <form method="POST">
+                    <form method="POST" action="{% url 'agregar_Cita_Medica' %}">
                         {% csrf_token %}
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Paciente</label>
-                                <select class="form-control" name="id_paciente" required>
-                                    <option value="">Seleccionar Paciente</option>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Paciente *</label>
+                                <select class="form-select" name="id_paciente" required>
+                                    <option value="">Seleccionar paciente...</option>
                                     {% for paciente in pacientes %}
-                                    <option value="{{ paciente.id_paciente }}">{{ paciente.nombre }} {{ paciente.apellido }}</option>
+                                    <option value="{{ paciente.id_paciente }}">{{ paciente.nombre }} {{ paciente.apellido }} - {{ paciente.numero_identificacion }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Doctor</label>
-                                <select class="form-control" name="id_doctor" required>
-                                    <option value="">Seleccionar Doctor</option>
+                            <div class="col-md-6">
+                                <label class="form-label">Doctor *</label>
+                                <select class="form-select" name="id_doctor" required>
+                                    <option value="">Seleccionar doctor...</option>
                                     {% for doctor in doctores %}
-                                    <option value="{{ doctor.id_doctor }}">Dr. {{ doctor.nombre }} {{ doctor.apellido }}</option>
+                                    <option value="{{ doctor.id_doctor }}">Dr. {{ doctor.nombre }} {{ doctor.apellido }} - {{ doctor.especialidad }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Fecha de Cita</label>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha de la Cita *</label>
                                 <input type="date" class="form-control" name="fecha_cita" required>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Hora de Cita</label>
+                            <div class="col-md-6">
+                                <label class="form-label">Hora de la Cita *</label>
                                 <input type="time" class="form-control" name="hora_cita" required>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Motivo</label>
-                            <textarea class="form-control" name="motivo" rows="3" required></textarea>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Estado</label>
-                                <select class="form-control" name="estado" required>
-                                    <option value="Programada">Programada</option>
-                                    <option value="Confirmada">Confirmada</option>
-                                    <option value="Completada">Completada</option>
-                                    <option value="Cancelada">Cancelada</option>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Duración (minutos)</label>
+                                <input type="number" class="form-control" name="duracion_minutos" value="30">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Tipo de Cita</label>
+                                <select class="form-select" name="tipo_cita">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="CONS">Consulta</option>
+                                    <option value="CONT">Control</option>
+                                    <option value="EMER">Emergencia</option>
+                                    <option value="SEGU">Seguimiento</option>
+                                    <option value="TERA">Terapia</option>
                                 </select>
                             </div>
                         </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Tipo de Atención</label>
+                                <select class="form-select" name="tipo_atencion">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="PRE">Presencial</option>
+                                    <option value="VIR">Virtual</option>
+                                    <option value="DOM">Domicilio</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Prioridad</label>
+                                <select class="form-select" name="prioridad">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="BAJA">Baja</option>
+                                    <option value="MED">Media</option>
+                                    <option value="ALTA">Alta</option>
+                                    <option value="URG">Urgente</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Costo de Consulta</label>
+                                <input type="number" step="0.01" class="form-control" name="costo_consulta">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Medio de Reserva</label>
+                                <select class="form-select" name="medio_reserva">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="WEB">Web</option>
+                                    <option value="TEL">Teléfono</option>
+                                    <option value="PER">Personalmente</option>
+                                    <option value="APP">App Móvil</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Lugar de la Cita</label>
+                            <input type="text" class="form-control" name="lugar_cita">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Motivo de la Consulta</label>
+                            <textarea class="form-control" name="motivo" rows="3"></textarea>
+                        </div>
+                        
                         <div class="mb-3">
                             <label class="form-label">Observaciones</label>
-                            <textarea class="form-control" name="observaciones" rows="3"></textarea>
+                            <textarea class="form-control" name="observaciones" rows="2"></textarea>
                         </div>
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn btn-info me-md-2">
-                                <i class="bi bi-save"></i> Guardar Cita
-                            </button>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Estado</label>
+                            <select class="form-select" name="estado">
+                                <option value="PEND">Pendiente</option>
+                                <option value="CONF">Confirmada</option>
+                                <option value="CANC">Cancelada</option>
+                                <option value="REAL">Realizada</option>
+                                <option value="AUS">Ausente</option>
+                            </select>
+                        </div>
+                        
+                        <div class="text-end">
                             <a href="{% url 'ver_Cita_Medica' %}" class="btn btn-secondary">
                                 <i class="bi bi-arrow-left"></i> Cancelar
                             </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Guardar Cita
+                            </button>
                         </div>
                     </form>
                 </div>

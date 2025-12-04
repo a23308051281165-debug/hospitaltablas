@@ -3,55 +3,131 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-10 mx-auto">
             <div class="card">
-                <div class="card-header bg-warning text-dark">
-                    <h4 class="mb-0"><i class="bi bi-pencil-square"></i> Actualizar Sala</h4>
+                <div class="card-header" style="background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%); color: white;">
+                    <h4 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Actualizar Sala: {{ sala.nombre }}</h4>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{% url 'realizar_actualizacion_Sala' sala.id_sala %}">
                         {% csrf_token %}
-                        <div class="mb-3">
-                            <label class="form-label">Nombre</label>
-                            <input type="text" class="form-control" name="nombre" value="{{ sala.nombre }}" required>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Capacidad</label>
-                                <input type="number" class="form-control" name="capacidad" value="{{ sala.capacidad }}" required>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Código de Sala *</label>
+                                <input type="text" class="form-control" name="codigo_sala" 
+                                       value="{{ sala.codigo_sala }}" required>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Tipo</label>
-                                <select class="form-control" name="tipo" required>
-                                    <option value="Consulta" {% if sala.tipo == 'Consulta' %}selected{% endif %}>Consulta</option>
-                                    <option value="Urgencias" {% if sala.tipo == 'Urgencias' %}selected{% endif %}>Urgencias</option>
-                                    <option value="Operaciones" {% if sala.tipo == 'Operaciones' %}selected{% endif %}>Operaciones</option>
-                                    <option value="Recuperación" {% if sala.tipo == 'Recuperación' %}selected{% endif %}>Recuperación</option>
-                                    <option value="Observación" {% if sala.tipo == 'Observación' %}selected{% endif %}>Observación</option>
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre *</label>
+                                <input type="text" class="form-control" name="nombre" 
+                                       value="{{ sala.nombre }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Tipo de Sala *</label>
+                                <select class="form-select" name="tipo" required>
+                                    <option value="CONS" {% if sala.tipo == 'CONS' %}selected{% endif %}>Consulta</option>
+                                    <option value="QUIR" {% if sala.tipo == 'QUIR' %}selected{% endif %}>Quirófano</option>
+                                    <option value="URG" {% if sala.tipo == 'URG' %}selected{% endif %}>Urgencias</option>
+                                    <option value="HOS" {% if sala.tipo == 'HOS' %}selected{% endif %}>Hospitalización</option>
+                                    <option value="LAB" {% if sala.tipo == 'LAB' %}selected{% endif %}>Laboratorio</option>
+                                    <option value="ADM" {% if sala.tipo == 'ADM' %}selected{% endif %}>Administrativa</option>
+                                    <option value="OTRO" {% if sala.tipo == 'OTRO' %}selected{% endif %}>Otro</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Tipo de Uso</label>
+                                <select class="form-select" name="tipo_uso">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="GEN" {% if sala.tipo_uso == 'GEN' %}selected{% endif %}>General</option>
+                                    <option value="ESP" {% if sala.tipo_uso == 'ESP' %}selected{% endif %}>Especializada</option>
+                                    <option value="CRI" {% if sala.tipo_uso == 'CRI' %}selected{% endif %}>Cuidados Críticos</option>
+                                    <option value="DIAG" {% if sala.tipo_uso == 'DIAG' %}selected{% endif %}>Diagnóstico</option>
+                                    <option value="TRAT" {% if sala.tipo_uso == 'TRAT' %}selected{% endif %}>Tratamiento</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="disponibilidad" value="True" id="disponibilidad" 
-                                    {% if sala.disponibilidad %}checked{% endif %}>
-                                <label class="form-check-label" for="disponibilidad">
-                                    Disponible
-                                </label>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Capacidad *</label>
+                                <input type="number" class="form-control" name="capacidad" 
+                                       value="{{ sala.capacidad|default:'1' }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Capacidad Crítica</label>
+                                <input type="number" class="form-control" name="capacidad_critica" 
+                                       value="{{ sala.capacidad_critica|default:'' }}">
                             </div>
                         </div>
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn btn-warning me-md-2">
-                                <i class="bi bi-check-circle"></i> Actualizar Sala
-                            </button>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Ubicación</label>
+                            <input type="text" class="form-control" name="ubicacion" 
+                                   value="{{ sala.ubicacion|default:'' }}">
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Número de Teléfono</label>
+                                <input type="text" class="form-control" name="numero_telefono" 
+                                       value="{{ sala.numero_telefono|default:'' }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Correo de Contacto</label>
+                                <input type="email" class="form-control" name="correo_contacto" 
+                                       value="{{ sala.correo_contacto|default:'' }}">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Equipamiento</label>
+                            <textarea class="form-control" name="equipamiento" rows="3">{{ sala.equipamiento|default:'' }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Descripción</label>
+                            <textarea class="form-control" name="descripcion" rows="2">{{ sala.descripcion|default:'' }}</textarea>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Estado de Mantenimiento</label>
+                                <select class="form-select" name="estado_mantenimiento">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="OPT" {% if sala.estado_mantenimiento == 'OPT' %}selected{% endif %}>Óptimo</option>
+                                    <option value="REG" {% if sala.estado_mantenimiento == 'REG' %}selected{% endif %}>Regular</option>
+                                    <option value="MANT" {% if sala.estado_mantenimiento == 'MANT' %}selected{% endif %}>En Mantenimiento</option>
+                                    <option value="REP" {% if sala.estado_mantenimiento == 'REP' %}selected{% endif %}>En Reparación</option>
+                                    <option value="INH" {% if sala.estado_mantenimiento == 'INH' %}selected{% endif %}>Inhabilitada</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha Último Mantenimiento</label>
+                                <input type="date" class="form-control" name="fecha_ultima_mantenimiento" 
+                                       value="{{ sala.fecha_ultima_mantenimiento|date:'Y-m-d' }}">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" name="disponibilidad" id="disponibilidad" 
+                                   {% if sala.disponibilidad %}checked{% endif %}>
+                            <label class="form-check-label" for="disponibilidad">Sala Disponible</label>
+                        </div>
+                        
+                        <div class="text-end">
                             <a href="{% url 'ver_Sala' %}" class="btn btn-secondary">
                                 <i class="bi bi-arrow-left"></i> Cancelar
                             </a>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="bi bi-check-circle"></i> Actualizar
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
 </div>
 {% endblock %}

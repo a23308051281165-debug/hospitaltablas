@@ -3,55 +3,119 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-10 mx-auto">
             <div class="card">
-                <div class="card-header bg-warning text-dark">
-                    <h4 class="mb-0"><i class="bi bi-pencil-square"></i> Actualizar Diagnóstico</h4>
+                <div class="card-header" style="background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%); color: white;">
+                    <h4 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Actualizar Diagnóstico ID: {{ diagnostico.id_diagnostico }}</h4>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{% url 'realizar_actualizacion_Diagnostico' diagnostico.id_diagnostico %}">
                         {% csrf_token %}
-                        <div class="mb-3">
-                            <label class="form-label">Cita Médica</label>
-                            <select class="form-control" name="id_cita" required>
-                                {% for cita in citas %}
-                                <option value="{{ cita.id_cita }}" 
-                                    {% if cita.id_cita == diagnostico.id_cita.id_cita %}selected{% endif %}>
-                                    Cita {{ cita.id_cita }} - {{ cita.id_paciente.nombre }} {{ cita.id_paciente.apellido }}
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Descripción</label>
-                            <textarea class="form-control" name="descripcion" rows="4" required>{{ diagnostico.descripcion }}</textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Tratamiento Recomendado</label>
-                            <textarea class="form-control" name="tratamiento_recomendado" rows="3" required>{{ diagnostico.tratamiento_recomendado }}</textarea>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Nivel de Gravedad</label>
-                                <select class="form-control" name="nivel_gravedad" required>
-                                    <option value="Leve" {% if diagnostico.nivel_gravedad == 'Leve' %}selected{% endif %}>Leve</option>
-                                    <option value="Moderado" {% if diagnostico.nivel_gravedad == 'Moderado' %}selected{% endif %}>Moderado</option>
-                                    <option value="Grave" {% if diagnostico.nivel_gravedad == 'Grave' %}selected{% endif %}>Grave</option>
-                                    <option value="Crítico" {% if diagnostico.nivel_gravedad == 'Crítico' %}selected{% endif %}>Crítico</option>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Cita Médica *</label>
+                                <select class="form-select" name="id_cita" required>
+                                    {% for cita in citas %}
+                                    <option value="{{ cita.id_cita }}" 
+                                            {% if cita.id_cita == diagnostico.id_cita.id_cita %}selected{% endif %}>
+                                        Cita {{ cita.id_cita }} - {{ cita.id_paciente.nombre }} {{ cita.id_paciente.apellido }} - {{ cita.fecha_cita|date:"d/m/Y" }}
+                                    </option>
+                                    {% endfor %}
                                 </select>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Fecha de Registro</label>
-                                <input type="date" class="form-control" name="fecha_registro" value="{{ diagnostico.fecha_registro|date:'Y-m-d' }}" required>
+                            <div class="col-md-6">
+                                <label class="form-label">Código CIE-10</label>
+                                <input type="text" class="form-control" name="codigo_cie10" 
+                                       value="{{ diagnostico.codigo_cie10|default:'' }}">
                             </div>
                         </div>
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn btn-warning me-md-2">
-                                <i class="bi bi-check-circle"></i> Actualizar Diagnóstico
-                            </button>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Código de Diagnóstico</label>
+                                <input type="text" class="form-control" name="codigo_diagnostico" 
+                                       value="{{ diagnostico.codigo_diagnostico|default:'' }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Especialista Encargado</label>
+                                <input type="text" class="form-control" name="especialista_encargado" 
+                                       value="{{ diagnostico.especialista_encargado|default:'' }}">
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Nivel de Gravedad</label>
+                                <select class="form-select" name="nivel_gravedad">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="LEV" {% if diagnostico.nivel_gravedad == 'LEV' %}selected{% endif %}>Leve</option>
+                                    <option value="MOD" {% if diagnostico.nivel_gravedad == 'MOD' %}selected{% endif %}>Moderado</option>
+                                    <option value="GRA" {% if diagnostico.nivel_gravedad == 'GRA' %}selected{% endif %}>Grave</option>
+                                    <option value="CRI" {% if diagnostico.nivel_gravedad == 'CRI' %}selected{% endif %}>Crítico</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Estado del Diagnóstico</label>
+                                <select class="form-select" name="estado_diagnostico">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="PREL" {% if diagnostico.estado_diagnostico == 'PREL' %}selected{% endif %}>Preliminar</option>
+                                    <option value="CONF" {% if diagnostico.estado_diagnostico == 'CONF' %}selected{% endif %}>Confirmado</option>
+                                    <option value="DESC" {% if diagnostico.estado_diagnostico == 'DESC' %}selected{% endif %}>Descartado</option>
+                                    <option value="REVI" {% if diagnostico.estado_diagnostico == 'REVI' %}selected{% endif %}>En Revisión</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Tipo de Diagnóstico</label>
+                            <select class="form-select" name="tipo_diagnostico">
+                                <option value="">Seleccionar...</option>
+                                <option value="CLIN" {% if diagnostico.tipo_diagnostico == 'CLIN' %}selected{% endif %}>Clínico</option>
+                                <option value="LAB" {% if diagnostico.tipo_diagnostico == 'LAB' %}selected{% endif %}>Laboratorio</option>
+                                <option value="IMG" {% if diagnostico.tipo_diagnostico == 'IMG' %}selected{% endif %}>Imagenología</option>
+                                <option value="PAT" {% if diagnostico.tipo_diagnostico == 'PAT' %}selected{% endif %}>Patológico</option>
+                                <option value="COM" {% if diagnostico.tipo_diagnostico == 'COM' %}selected{% endif %}>Combinado</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Descripción del Diagnóstico *</label>
+                            <textarea class="form-control" name="descripcion" rows="4" required>{{ diagnostico.descripcion|default:'' }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Resultado de Exámenes</label>
+                            <textarea class="form-control" name="resultado_examen" rows="3">{{ diagnostico.resultado_examen|default:'' }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Tratamiento Recomendado</label>
+                            <textarea class="form-control" name="tratamiento_recomendado" rows="3">{{ diagnostico.tratamiento_recomendado|default:'' }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Seguimiento</label>
+                            <textarea class="form-control" name="seguimiento" rows="2">{{ diagnostico.seguimiento|default:'' }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Recomendaciones</label>
+                            <textarea class="form-control" name="recomendaciones" rows="2">{{ diagnostico.recomendaciones|default:'' }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Comentarios</label>
+                            <textarea class="form-control" name="comentarios" rows="2">{{ diagnostico.comentarios|default:'' }}</textarea>
+                        </div>
+                        
+                        <div class="text-end">
                             <a href="{% url 'ver_Diagnostico' %}" class="btn btn-secondary">
                                 <i class="bi bi-arrow-left"></i> Cancelar
                             </a>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="bi bi-check-circle"></i> Actualizar
+                            </button>
                         </div>
                     </form>
                 </div>
