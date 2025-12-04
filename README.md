@@ -1,11 +1,13 @@
-# Django
-
-A Django starter template as per the docs: https://docs.djangoproject.com/en/5.0/intro/tutorial01/
-
-<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/d0b8888f-fce3-4edf-9e50-6bfada2ee881" />
-<img width="1600" height="860" alt="image" src="https://github.com/user-attachments/assets/2460fa20-cad3-4d13-9102-9e0b4c3a0c84" />
-<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/5715759c-4f77-4c82-9e0e-6b51354b0fe5" />
-<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/538f1ee9-50ab-4399-a53c-da119ae8c79d" />
-<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/cdf7e041-e354-4ede-a2cf-aea92f074457" />
-<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/247d7860-377a-451b-8720-e74349d1f288" />
-<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/7f1c55c8-f09d-44f1-979f-6d4f3f51e826" />
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/4e771fc4-dbeb-4546-8e36-1f897a44198a" />
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/6c6a6c29-f2e5-48ce-98d1-b8fddd6aebd8" />
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/79b21719-9125-4b7b-9457-f62ea065f80f" />
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/6ff06c4a-a666-40d2-898b-87c8115d2007" />
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/df91ec21-89e5-4e7b-946e-7408bc9be2f4" />
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/10f7834c-46bf-4568-ac2b-234c82b5d27a" />
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/744c7385-c4ea-4a0e-a69d-a8733f094c60" />
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/1e3b67f6-5b25-482b-b2c3-85f4d9f64403" />
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/297db102-98a5-4028-a626-3dc6236432e3" />
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/c5c8e80c-68cf-4aa4-8f91-9fd2d631635a" />
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/2fe2c757-9256-44b3-9a8a-f111c94aa4d9" />
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/a8f6a01f-7304-4615-861b-521d8d0aecdb" />
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/27e32b92-0ba9-4cba-9741-9355469c4867" />
