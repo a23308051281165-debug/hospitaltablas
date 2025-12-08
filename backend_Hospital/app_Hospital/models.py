@@ -317,6 +317,7 @@ class Sala(models.Model):
     ]
     
     id_sala = models.AutoField(primary_key=True)
+    id_paciente = models.ForeignKey(Paciente, on_delete=models.SET_NULL, blank=True, null=True, related_name='salas')
     nombre = models.CharField(max_length=100, blank=True, null=True)
     capacidad = models.IntegerField(default=1, blank=True, null=True)
     tipo = models.CharField(max_length=50, choices=TIPO_SALA_OPCIONES, blank=True, null=True)

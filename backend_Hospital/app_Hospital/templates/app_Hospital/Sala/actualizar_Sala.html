@@ -11,6 +11,19 @@
                 <div class="card-body">
                     <form method="POST" action="{% url 'realizar_actualizacion_Sala' sala.id_sala %}">
                         {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label">Paciente Asignado</label>
+                            <select class="form-select" name="id_paciente">
+                                <option value="">Sin asignar</option>
+                                {% for paciente in pacientes %}
+                                    <option value="{{ paciente.id_paciente }}" 
+                                            {% if sala.id_paciente and sala.id_paciente.id_paciente == paciente.id_paciente %}selected{% endif %}>
+                                        {{ paciente }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
                         
                         <div class="row mb-3">
                             <div class="col-md-6">

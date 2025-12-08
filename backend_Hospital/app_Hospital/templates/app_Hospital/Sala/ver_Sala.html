@@ -21,6 +21,7 @@
                                     <th>Nombre</th>
                                     <th>Tipo</th>
                                     <th>Capacidad</th>
+                                    <th>Paciente</th>
                                     <th>Ubicación</th>
                                     <th>Disponibilidad</th>
                                     <th>Mantenimiento</th>
@@ -52,6 +53,13 @@
                                         {% endif %}
                                     </td>
                                     <td>{{ sala.capacidad }}</td>
+                                    <td>
+                                        {% if sala.id_paciente %}
+                                            {{ sala.id_paciente }}
+                                        {% else %}
+                                            <span class="badge bg-secondary">Sin asignar</span>
+                                        {% endif %}
+                                    </td>
                                     <td>{{ sala.ubicacion|truncatechars:20|default:"-" }}</td>
                                     <td>
                                         {% if sala.disponibilidad %}

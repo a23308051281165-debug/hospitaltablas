@@ -328,6 +328,11 @@ def borrar_Factura_Hospital(request, id):
 def agregar_Sala(request):
     if request.method == 'POST':
         sala = Sala()
+        
+        paciente_id = request.POST.get('id_paciente')
+        if paciente_id:
+            sala.id_paciente = Paciente.objects.get(id_paciente=paciente_id)
+
         sala.nombre = request.POST.get('nombre')
         sala.capacidad = request.POST.get('capacidad')
         sala.tipo = request.POST.get('tipo')
@@ -344,19 +349,33 @@ def agregar_Sala(request):
         sala.tipo_uso = request.POST.get('tipo_uso')
         sala.save()
         return redirect('ver_Sala')
-    return render(request, 'app_Hospital/Sala/agregar_Sala.html')
+    
+    pacientes = Paciente.objects.all().order_by('apellido', 'nombre')
+    return render(request, 'app_Hospital/Sala/agregar_Sala.html', {'pacientes': pacientes})
 
 def ver_Sala(request):
-    salas = Sala.objects.all().order_by('tipo', 'nombre')
+    salas = Sala.objects.select_related('id_paciente').all().order_by('tipo', 'nombre')
     return render(request, 'app_Hospital/Sala/ver_Sala.html', {'salas': salas})
 
 def actualizar_Sala(request, id):
     sala = get_object_or_404(Sala, id_sala=id)
-    return render(request, 'app_Hospital/Sala/actualizar_Sala.html', {'sala': sala})
+    pacientes = Paciente.objects.all().order_by('apellido', 'nombre')
+    return render(request, 'app_Hospital/Sala/actualizar_Sala.html', {
+        'sala': sala,
+        'pacientes': pacientes
+    })
 
 def realizar_actualizacion_Sala(request, id):
     if request.method == 'POST':
         sala = Sala.objects.get(id_sala=id)
+        
+        # Asignar paciente
+        paciente_id = request.POST.get('id_paciente')
+        if paciente_id:
+            sala.id_paciente = Paciente.objects.get(id_paciente=paciente_id)
+        else:
+            sala.id_paciente = None
+
         sala.nombre = request.POST.get('nombre')
         sala.capacidad = request.POST.get('capacidad')
         sala.tipo = request.POST.get('tipo')
